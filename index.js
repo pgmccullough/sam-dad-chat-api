@@ -13,18 +13,9 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [
-      '*',
-      true,
-      'localhost:3000',
-      'http://localhost:3000',
-      'https://sam-dad-chat-client-1565325be607.herokuapp.com',
-      'sam-dad-chat-client-1565325be607.herokuapp.com',
-      'https://sam-dad-chat-client-1565325be607.herokuapp.com/',
-      'sam-dad-chat-client-1565325be607.herokuapp.com/'
-
-    ],
+    origin: '*',
     methods: ['GET', 'POST'],
+    credentials: true
   },
 });
 
