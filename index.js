@@ -18,7 +18,7 @@ const io = new Server(server, {
   },
 });
 
-const convo = [];
+let convo = [];
 const users = {};
 
 io.on('connection', (socket) => {
@@ -28,6 +28,12 @@ io.on('connection', (socket) => {
       convo.push({...data, id: uuidv4(), date: Date.now()});
       io.emit('message', convo);
     })
+    
+    socket.on('updateConvo', (data) => {
+      convo = data;
+      io.emit('message', convo);
+    })
+    
     socket.on('socketId', (data) => {
       users[socket.id] = data;
       io.emit('socketId', users);
