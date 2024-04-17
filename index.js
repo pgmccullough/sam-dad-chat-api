@@ -21,6 +21,12 @@ const io = new Server(server, {
 let convo = [];
 const users = {};
 
+const allUsersBut = (username) => {
+  return Object.entries(users).filter(
+    ([key, value]) => value!==username
+  ).map(arr => arr[0]);
+}
+
 io.on('connection', (socket) => {
   if(!users[socket.id]) {
     socket.emit('message', convo);
@@ -32,6 +38,10 @@ io.on('connection', (socket) => {
     socket.on('updateConvo', (data) => {
       convo = data;
       io.emit('message', convo);
+    })
+
+    socket.on('typing', (data) => {
+      io.to(allUsersBut(data)).emit('typing', data);
     })
     
     socket.on('socketId', (data) => {
